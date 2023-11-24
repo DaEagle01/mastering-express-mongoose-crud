@@ -10,4 +10,10 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use('/api/users', user_route_1.UserRoutes);
+app.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Welcome here.',
+    });
+});
 exports.default = app;
