@@ -1,3 +1,5 @@
+import { Model } from 'mongoose'
+
 interface IOrder {
   productName: string
   price: number
@@ -24,4 +26,8 @@ interface IUser {
   orders?: IOrder[]
 }
 
-export { IUser, IOrder }
+interface UserModel extends Model<IUser> {
+  getUserByUserId(id: string): Promise<IUser | null>
+}
+
+export { IUser, IOrder, UserModel }

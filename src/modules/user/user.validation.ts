@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const orderSchema = z.object({
+export const OrderValidationSchema = z.object({
   productName: z.string().min(1, { message: 'Product name is required.' }),
   price: z.number().positive({ message: 'Product price must be positive.' }),
   quantity: z
@@ -9,7 +9,7 @@ const orderSchema = z.object({
     .positive({ message: 'Product quantity must be a positive integer.' }),
 })
 
-const userSchema = z.object({
+export const UserValidationSchema = z.object({
   userId: z
     .number()
     .int()
@@ -17,11 +17,9 @@ const userSchema = z.object({
   username: z.string().min(5, {
     message: 'Username is required and must be at least 5 characters long.',
   }),
-  password: z
-    .string()
-    .min(6, {
-      message: 'Password is required and must be at least 6 characters long.',
-    }),
+  password: z.string().min(6, {
+    message: 'Password is required and must be at least 6 characters long.',
+  }),
   fullName: z
     .object({
       firstName: z.string().min(1, { message: 'First name is required.' }),
@@ -51,7 +49,5 @@ const userSchema = z.object({
     .refine((data) => data.street && data.city && data.country, {
       message: 'Address is required.',
     }),
-  orders: z.array(orderSchema).default([]),
+  orders: z.array(OrderValidationSchema).default([]),
 })
-
-export const UserValidationSchema = userSchema

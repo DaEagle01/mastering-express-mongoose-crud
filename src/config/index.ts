@@ -10,4 +10,5 @@ export default {
   databaseUrlLocal: process.env.DATABASE_URL_LOCAL,
   databaseUrl: process.env.DATABASE_URL,
   nodeEnv: process.env.NODE_ENV,
+  bcryptSaltRounds: process.env.BCRYPT_SALT_ROUNDS,
 }

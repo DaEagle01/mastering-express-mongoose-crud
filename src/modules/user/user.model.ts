@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { IOrder, IUser } from './user.interface'
+import { IOrder, IUser, UserModel } from './user.interface'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const orderSchema = new Schema<IOrder>({
   productName: {
@@ -16,7 +18,7 @@ const orderSchema = new Schema<IOrder>({
   },
 })
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel>({
   userId: {
     type: Number,
     unique: true,
@@ -85,4 +87,23 @@ const userSchema = new Schema<IUser>({
   },
 })
 
-export const User = model<IUser>('User', userSchema)
+userSchema.statics.getUserByUserId = async (userId: string) => {
+  const user = await User.findOne({ userId }, { password: 0 })
+  return user
+}
+
+userSchema.pre('save', async function (next) {
+  // here this refers to the document
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcryptSaltRounds),
+  )
+  next()
+})
+
+userSchema.post('save', function (user, next) {
+  user.password = ''
+  next()
+})
+
+export const User = model<IUser, UserModel>('User', userSchema)
