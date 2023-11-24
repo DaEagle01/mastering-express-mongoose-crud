@@ -76,7 +76,6 @@ const getSingleUser = async (req: Request, res: Response) => {
       })
     }
   } catch (error: any) {
-    console.log(error)
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong.',
@@ -216,7 +215,6 @@ const getTotalOrderPriceByUser = async (req: Request, res: Response) => {
 
     if (user) {
       const result = await UserServices.getTotalOrderPriceByUser(userId)
-      console.log(result)
 
       res.status(200).json({
         success: true,

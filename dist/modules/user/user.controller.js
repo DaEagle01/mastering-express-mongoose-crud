@@ -81,7 +81,6 @@ const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (error) {
-        console.log(error);
         res.status(500).json({
             success: false,
             message: error.message || 'Something went wrong.',
@@ -210,7 +209,6 @@ const getTotalOrderPriceByUser = (req, res) => __awaiter(void 0, void 0, void 0,
         const user = yield user_model_1.User.getUserByUserId(userId);
         if (user) {
             const result = yield user_services_1.UserServices.getTotalOrderPriceByUser(userId);
-            console.log(result);
             res.status(200).json({
                 success: true,
                 message: result
