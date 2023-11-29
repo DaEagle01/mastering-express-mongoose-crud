@@ -16,9 +16,7 @@ const userNotFoundStatus = (res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { userData } = req.body
-
-    const validatedData = UserValidationSchema.parse(userData)
+    const validatedData = UserValidationSchema.parse(req.body)
 
     const result = await UserServices.createUserIntoDB(validatedData)
 
@@ -89,10 +87,9 @@ const getSingleUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const { userData } = req.body
     const { userId } = req.params
 
-    const validatedData = UserValidationSchema.parse(userData)
+    const validatedData = UserValidationSchema.parse(req.body)
 
     const user = await User.getUserByUserId(userId)
 
@@ -150,9 +147,8 @@ const deleteUser = async (req: Request, res: Response) => {
 const addProductToOrder = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params
-    const { orderData } = req.body
 
-    const validatedData = OrderValidationSchema.parse(orderData)
+    const validatedData = OrderValidationSchema.parse(req.body)
 
     const user = await User.getUserByUserId(userId)
 

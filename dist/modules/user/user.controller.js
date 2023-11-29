@@ -25,8 +25,7 @@ const userNotFoundStatus = (res) => {
 };
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userData } = req.body;
-        const validatedData = user_validation_1.UserValidationSchema.parse(userData);
+        const validatedData = user_validation_1.UserValidationSchema.parse(req.body);
         const result = yield user_services_1.UserServices.createUserIntoDB(validatedData);
         res.status(201).json({
             success: true,
@@ -93,9 +92,8 @@ const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userData } = req.body;
         const { userId } = req.params;
-        const validatedData = user_validation_1.UserValidationSchema.parse(userData);
+        const validatedData = user_validation_1.UserValidationSchema.parse(req.body);
         const user = yield user_model_1.User.getUserByUserId(userId);
         if (user) {
             const result = yield user_services_1.UserServices.updateUserFromDB(userId, validatedData);
@@ -150,8 +148,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const addProductToOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId } = req.params;
-        const { orderData } = req.body;
-        const validatedData = user_validation_1.OrderValidationSchema.parse(orderData);
+        const validatedData = user_validation_1.OrderValidationSchema.parse(req.body);
         const user = yield user_model_1.User.getUserByUserId(userId);
         if (user) {
             yield user_services_1.UserServices.addProductToOrder(userId, validatedData);
